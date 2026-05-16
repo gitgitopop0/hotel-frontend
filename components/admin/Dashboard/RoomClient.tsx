@@ -461,9 +461,10 @@ const RoomClient = () => {
                         <div className="mt-5 flex flex-wrap gap-2">
                             {room.status === "OCC" && room.active_booking?.booking_ref && (
                                 <button
-                                    onClick={() =>
+                                    onClick={() => {
+                                        if (!room.active_booking) return
                                         handleCheckout(room.active_booking.booking_ref)
-                                    }
+                                    }}
                                     className="px-3 py-2 bg-blue-500/10 text-blue-400 rounded-md text-sm hover:bg-blue-500/20 cursor-pointer"
                                 >
                                     Checkout
