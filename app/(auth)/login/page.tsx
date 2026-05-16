@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useAuthStore } from "@/lib/stores/authStore"
 
@@ -10,7 +10,6 @@ const inputClass = `w-full border border-[#363a42] h-10 rounded-sm bg-[#1f242d]
 
 const Login = () => {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const setUser = useAuthStore((s) => s.setUser)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -50,7 +49,7 @@ const Login = () => {
 
       setUser(data.user)
 
-      const from = searchParams.get("from")
+      const from = "/"
       if (data.user.role === "admin") {
         router.push("/dashboard")
       } else {
@@ -71,11 +70,6 @@ const Login = () => {
         <div>
           <h1 className="text-center text-white text-2xl">Login</h1>
         </div>
-        {searchParams.get("registered") && (
-          <p className="text-green-400 text-sm text-center mb-3 bg-green-400/10 py-2 rounded-md">
-            สมัครสมาชิกสำเร็จ กรุณา login
-          </p>
-        )}
         {error && (
           <p className="text-red-400 text-sm text-center mb-3 bg-red-400/10 py-2 rounded-md">
             {error}
