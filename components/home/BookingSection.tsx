@@ -1,12 +1,13 @@
 "use client"
 import { useState } from "react"
-import { Prompt } from "next/font/google"
-import { toast } from "react-hot-toast"
+import { Kanit } from "next/font/google"
 
-const promptFont = Prompt({
-  subsets: ["thai"],
-  weight: ["300", "400", "600", "700"],
+
+const prompt = Kanit({
+    subsets: ["thai"],
+    weight: ["300", "400", "500", "600", "700"],
 })
+
 
 interface BookingResult {
   id: number
@@ -137,7 +138,7 @@ export default function BookingSection() {
       <div className="max-w-lg mx-auto">
         <div className="text-center mb-10">
           <p className="text-[#9c8251] text-sm tracking-widest uppercase mb-2">ตรวจสอบ</p>
-          <h1 className={`${promptFont.className} text-white text-3xl font-semibold mb-3`}>
+          <h1 className={`${prompt.className} text-white text-3xl font-semibold mb-3`}>
             สถานะการจอง
           </h1>
           <p className="text-gray-500 text-sm">กรอกรหัสการจองที่ได้รับหลังจากจองห้องพัก</p>
