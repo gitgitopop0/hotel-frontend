@@ -187,19 +187,26 @@ const BookingStepGuest = ({
     onNext: (data: GuestData) => void
     onBack: () => void
 }) => {
+    type GuestErrors = Partial<Record<keyof GuestData, string>>
+
     const [form, setForm] = useState<GuestData>({
         full_name: "", email: "", phone: "", id_card: "",
         num_guests: 1, special_request: "",
     })
-    const [errors, setErrors] = useState<Partial<GuestData>>({})
+
+    const [errors, setErrors] = useState<GuestErrors>({})
 
     const set = (k: keyof GuestData, v: string | number) =>
         setForm((p) => ({ ...p, [k]: v }))
 
-    const validate = () => {
-        const e: Partial<Record<keyof GuestData, string>> = {}
+    const validate = (): GuestErrors => {
+        const e: GuestErrors = {}
         if (!form.full_name.trim()) e.full_name = "กรุณากรอกชื่อ-นามสกุล"
-        if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = "กรุณากรอกอีเมลให้ถูกต้อง"
+        if (!form.email.trim()) {
+            e.email = "กรุณากรอกอีเมล"
+        } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+            e.email = "รูปแบบอีเมลไม่ถูกต้อง"
+        }
         return e
     }
 
