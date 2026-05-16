@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
 
     if (!process.env.NEXT_PUBLIC_API_URL) {
