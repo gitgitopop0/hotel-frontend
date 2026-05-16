@@ -11,9 +11,9 @@ export async function POST(
     { params }: Params
 ) {
     try {
-        if (!process.env.API_URL) {
+        if (!process.env.NEXT_PUBLIC_API_URL) {
             return NextResponse.json(
-                { message: "API_URL not set" },
+                { message: "NEXT_PUBLIC_API_URL not set" },
                 { status: 500 }
             )
         }
@@ -23,7 +23,7 @@ export async function POST(
         const token = req.cookies.get("token")?.value
 
         const res = await fetch(
-            `${process.env.API_URL}/payment/${booking_ref}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/payment/${booking_ref}`,
             {
                 method: "POST",
                 headers: {

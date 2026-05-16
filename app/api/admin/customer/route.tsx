@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     if (search) params.set("search", search)
 
     const res = await fetch(
-        `${process.env.API_URL}/customers/?${params}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/customers/?${params}`,
         {
             headers: {
                 Cookie: `token=${token}`,

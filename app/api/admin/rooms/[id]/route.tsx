@@ -9,7 +9,7 @@ export async function PUT(
         const token = req.cookies.get("token")?.value
         const body = await req.json()
 
-        const res = await fetch(`${process.env.API_URL}/room/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/room/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export async function DELETE(
         const { id } = await params
         const token = req.cookies.get("token")?.value
 
-        const res = await fetch(`${process.env.API_URL}/room/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/room/${id}`, {
             method: "DELETE",
             headers: {
                 Cookie: `token=${token ?? ""}`,

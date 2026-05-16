@@ -19,7 +19,7 @@ export async function POST(
         const formData = await req.formData()
 
         const res = await fetch(
-            `${process.env.API_URL}/cover/${id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/cover/${id}`,
             {
                 method: "POST",
                 headers: {
@@ -54,7 +54,7 @@ export async function DELETE(
         const token = req.cookies.get("token")?.value
 
         const res = await fetch(
-            `${process.env.API_URL}/cover/${id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/cover/${id}`,
             {
                 method: "DELETE",
                 headers: {

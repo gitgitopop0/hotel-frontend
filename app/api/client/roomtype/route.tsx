@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
         }
 
         const params = new URLSearchParams({ check_in: check_in, check_out: check_out })
-        const res = await fetch(`${process.env.API_URL}/category/availability?${params}`)
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category/availability?${params}`)
         const data = await res.json()
 
         if (!res.ok) {

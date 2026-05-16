@@ -10,7 +10,7 @@ export async function POST(
         const token = req.cookies.get("token")?.value
 
         const res = await fetch(
-            `${process.env.API_URL}/room/${booking_ref}/checkout`,
+            `${process.env.NEXT_PUBLIC_API_URL}/room/${booking_ref}/checkout`,
             {
                 method: "POST",
                 headers: {

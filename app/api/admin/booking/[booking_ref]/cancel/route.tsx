@@ -16,7 +16,7 @@ export async function PUT(
     const token = req.cookies.get("token")?.value
 
     const res = await fetch(
-      `${process.env.API_URL}/booking/${booking_ref}/cancel`,
+      `${process.env.NEXT_PUBLIC_API_URL}/booking/${booking_ref}/cancel`,
       {
         method: "PUT",
         headers: {

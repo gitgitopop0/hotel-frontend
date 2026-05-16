@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     try {
-        if (!process.env.API_URL) {
+        if (!process.env.NEXT_PUBLIC_API_URL) {
             return NextResponse.json(
-                { message: "API_URL not set" },
+                { message: "NEXT_PUBLIC_API_URL not set" },
                 { status: 500 }
             )
         }
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
         const body = await req.json()
 
-        const res = await fetch(`${process.env.API_URL}/booking/`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

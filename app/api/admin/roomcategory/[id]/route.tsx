@@ -15,7 +15,7 @@ export async function GET(
         const { id } = await params
 
         const res = await fetch(
-            `${process.env.API_URL}/category/${id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/category/${id}`,
             {
                 cache: "no-store"
             }
@@ -46,7 +46,7 @@ export async function PUT(
         const body = await req.json()
 
         const res = await fetch(
-            `${process.env.API_URL}/category/${id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/category/${id}`,
             {
                 method: "PUT",
                 headers: {
@@ -82,7 +82,7 @@ export async function DELETE(
         const token = req.cookies.get("token")?.value
 
         const res = await fetch(
-            `${process.env.API_URL}/category/${id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/category/${id}`,
             {
                 method: "DELETE",
                 headers: {

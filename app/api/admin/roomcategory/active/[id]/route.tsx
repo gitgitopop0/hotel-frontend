@@ -10,7 +10,7 @@ export async function PUT(
         const token = req.cookies.get("token")?.value
 
         const res = await fetch(
-            `${process.env.API_URL}/category/active/${id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/category/active/${id}`,
             {
                 method: "PUT",
                 headers: {

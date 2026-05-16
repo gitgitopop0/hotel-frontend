@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
         const token = req.cookies.get("token")?.value
 
         const res = await fetch(
-            `${process.env.API_URL}/booking/admin/expire-pending`,
+            `${process.env.NEXT_PUBLIC_API_URL}/booking/admin/expire-pending`,
             {
                 method: "POST",
                 headers: {

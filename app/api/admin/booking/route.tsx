@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     if (status && status !== "ทั้งหมด") params.set("status", status)
 
     const res = await fetch(
-        `${process.env.API_URL}/booking/?${params}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/booking/?${params}`,
         {
             headers: {
                 Cookie: `token=${token}`,

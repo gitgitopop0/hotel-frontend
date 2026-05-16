@@ -9,7 +9,7 @@ export async function POST(
     const token = req.cookies.get("token")?.value
 
     const res = await fetch(
-        `${process.env.API_URL}/refund/${booking_ref}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/refund/${booking_ref}`,
         {
             method: "POST",
             headers: {

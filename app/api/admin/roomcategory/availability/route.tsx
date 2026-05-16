@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
         const check_out = searchParams.get("check_out")
 
         const res = await fetch(
-            `${process.env.API_URL}/category/availability?check_in=${check_in}&check_out=${check_out}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/category/availability?check_in=${check_in}&check_out=${check_out}`,
             {
                 cache: "no-store"
             }
