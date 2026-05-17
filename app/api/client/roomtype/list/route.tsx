@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server"
 
+export const maxDuration = 30
+
 export async function GET() {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category/`, {
-      signal: AbortSignal.timeout(30000),
+      signal: AbortSignal.timeout(25000),
       cache: "no-store",
     })
     const data = await res.json()
