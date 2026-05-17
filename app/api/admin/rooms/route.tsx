@@ -34,3 +34,22 @@ export async function POST(req: NextRequest) {
     )
   }
 }
+
+export async function GET(req: NextRequest) {
+  try {
+    const token = req.cookies.get("token")?.value
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/room/`, {
+      headers: {
+        Cookie: `token=${token}`,
+      },
+    })
+
+    const data = await res.json()
+    return NextResponse.json(data, { status: res.status })
+
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json({ message: "Server error" }, { status: 500 })
+  }
+}

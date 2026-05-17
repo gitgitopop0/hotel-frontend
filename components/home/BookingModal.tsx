@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
 import { Prompt } from "next/font/google"
+import { useRouter } from "next/navigation"
 
 const prompt = Prompt({ subsets: ["thai"], weight: ["300", "400", "600", "700"] })
 
@@ -72,7 +73,7 @@ const StepIndicator = ({ current }: { current: Step }) => {
 
 const BookingStepSummary = ({
     room, checkIn, checkOut, nights,
-    onNext, onClose,
+    onNext, onClose, isAuthenticated,
 }: {
     room: RoomCategory
     checkIn: string
@@ -80,59 +81,72 @@ const BookingStepSummary = ({
     nights: number
     onNext: () => void
     onClose: () => void
-}) => (
-    <div className="flex flex-col gap-4">
-        <div>
-            <p className="text-[#9c8251] text-xs mb-1">ห้องที่เลือก</p>
-            <h3 className={`${prompt.className} text-white text-lg font-semibold`}>{room.name}</h3>
-        </div>
+    isAuthenticated: boolean
+}) => {
+    const router = useRouter()
 
-        {room.cover_image_url && (
-            <img src={room.cover_image_url} alt={room.name}
-                className="w-full h-36 object-cover rounded-sm opacity-80" />
-        )}
+    const handleNext = () => {
+        if (!isAuthenticated) {
+            router.push(`/login?from=${encodeURIComponent(window.location.pathname)}`)
+            return
+        }
+        onNext()
+    }
 
-        <div className="grid grid-cols-2 gap-2">
-            <div className="bg-[#161b24] rounded-sm p-3">
-                <p className="text-gray-600 text-xs mb-1">เช็คอิน</p>
-                <p className="text-white text-sm font-medium">{checkIn}</p>
-                <p className="text-gray-600 text-[10px]">14:00 น.</p>
-            </div>
-            <div className="bg-[#161b24] rounded-sm p-3">
-                <p className="text-gray-600 text-xs mb-1">เช็คเอาท์</p>
-                <p className="text-white text-sm font-medium">{checkOut}</p>
-                <p className="text-gray-600 text-[10px]">12:00 น.</p>
-            </div>
-        </div>
-
-        <div className="flex gap-3 text-xs text-gray-500">
-            <span>👤 {room.capacity} คน</span>
-            <span>🛏 {room.beds} เตียง</span>
-            <span>📐 {room.area_sqm} m²</span>
-        </div>
-
-        <div className="border-t border-[#2a3347] pt-3 flex justify-between items-end">
+    return (
+        <div className="flex flex-col gap-4">
             <div>
-                <p className="text-gray-600 text-xs">ราคารวม ({nights} คืน)</p>
-                <p className={`${prompt.className} text-[#be964c] text-xl font-semibold`}>
-                    ฿{(room.price_per_night * nights).toLocaleString()}
-                </p>
-                <p className="text-gray-600 text-xs">฿{room.price_per_night.toLocaleString()} / คืน</p>
+                <p className="text-[#9c8251] text-xs mb-1">ห้องที่เลือก</p>
+                <h3 className={`${prompt.className} text-white text-lg font-semibold`}>{room.name}</h3>
+            </div>
+
+            {room.cover_image_url && (
+                <img src={room.cover_image_url} alt={room.name}
+                    className="w-full h-36 object-cover rounded-sm opacity-80" />
+            )}
+
+            <div className="grid grid-cols-2 gap-2">
+                <div className="bg-[#161b24] rounded-sm p-3">
+                    <p className="text-gray-600 text-xs mb-1">เช็คอิน</p>
+                    <p className="text-white text-sm font-medium">{checkIn}</p>
+                    <p className="text-gray-600 text-[10px]">14:00 น.</p>
+                </div>
+                <div className="bg-[#161b24] rounded-sm p-3">
+                    <p className="text-gray-600 text-xs mb-1">เช็คเอาท์</p>
+                    <p className="text-white text-sm font-medium">{checkOut}</p>
+                    <p className="text-gray-600 text-[10px]">12:00 น.</p>
+                </div>
+            </div>
+
+            <div className="flex gap-3 text-xs text-gray-500">
+                <span>👤 {room.capacity} คน</span>
+                <span>🛏 {room.beds} เตียง</span>
+                <span>📐 {room.area_sqm} m²</span>
+            </div>
+
+            <div className="border-t border-[#2a3347] pt-3 flex justify-between items-end">
+                <div>
+                    <p className="text-gray-600 text-xs">ราคารวม ({nights} คืน)</p>
+                    <p className={`${prompt.className} text-[#be964c] text-xl font-semibold`}>
+                        ฿{(room.price_per_night * nights).toLocaleString()}
+                    </p>
+                    <p className="text-gray-600 text-xs">฿{room.price_per_night.toLocaleString()} / คืน</p>
+                </div>
+            </div>
+
+            <div className="flex gap-2 pt-1">
+                <button onClick={onClose}
+                    className="flex-1 border border-[#2a3347] text-gray-500 py-2.5 rounded-sm text-sm hover:border-gray-500 transition-colors cursor-pointer">
+                    ยกเลิก
+                </button>
+                <button onClick={handleNext}
+                    className="flex-1 bg-[#be964c] hover:bg-[#b8965c] text-black font-medium py-2.5 rounded-sm text-sm transition-colors cursor-pointer active:scale-[0.98]">
+                    {isAuthenticated ? "ถัดไป →" : "เข้าสู่ระบบเพื่อจอง"}  {/* เปลี่ยนข้อความด้วย */}
+                </button>
             </div>
         </div>
-
-        <div className="flex gap-2 pt-1">
-            <button onClick={onClose}
-                className="flex-1 border border-[#2a3347] text-gray-500 py-2.5 rounded-sm text-sm hover:border-gray-500 transition-colors cursor-pointer">
-                ยกเลิก
-            </button>
-            <button onClick={onNext}
-                className="flex-1 bg-[#be964c] hover:bg-[#b8965c] text-black font-medium py-2.5 rounded-sm text-sm transition-colors cursor-pointer active:scale-[0.98]">
-                ถัดไป →
-            </button>
-        </div>
-    </div>
-)
+    )
+}
 
 interface FieldProps {
     label: string
@@ -510,9 +524,10 @@ interface BookingModalProps {
     checkOut: string
     nights: number
     onClose: () => void
+    isAuthenticated: boolean
 }
 
-const BookingModal = ({ room, checkIn, checkOut, nights, onClose }: BookingModalProps) => {
+const BookingModal = ({ room, checkIn, checkOut, nights, onClose, isAuthenticated }: BookingModalProps) => {
     const [step, setStep] = useState<Step>("summary")
     const [guestData, setGuestData] = useState<GuestData | null>(null)
     const [booking, setBooking] = useState<BookingResult | null>(null)
@@ -566,7 +581,10 @@ const BookingModal = ({ room, checkIn, checkOut, nights, onClose }: BookingModal
         }
     }, [room.id, checkIn, checkOut])
 
+
+
     return (
+
         <div className="fixed inset-0 z-50 bg-black/80 flex items-start justify-center px-4 pt-24 pb-6 overflow-y-auto"
             onClick={step !== "success" ? onClose : undefined}>
             <div
@@ -590,6 +608,7 @@ const BookingModal = ({ room, checkIn, checkOut, nights, onClose }: BookingModal
                         <BookingStepSummary
                             room={room} checkIn={checkIn} checkOut={checkOut} nights={nights}
                             onNext={() => setStep("guest")} onClose={onClose}
+                            isAuthenticated={isAuthenticated}
                         />
                     )}
 

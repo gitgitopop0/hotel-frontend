@@ -62,7 +62,6 @@ const Lightbox = ({
       className="fixed inset-0 z-[9999] bg-black/95 flex flex-col"
       onClick={onClose}
     >
-      {/* Header */}
       <div className="flex items-center justify-between px-5 py-4" onClick={(e) => e.stopPropagation()}>
         <p className="text-white/70 text-sm">{roomName}</p>
         <div className="flex items-center gap-4">
@@ -130,6 +129,13 @@ const RoomsSection = () => {
   const [lightbox, setLightbox] = useState<{ images: string[]; index: number; name: string } | null>(null)
   const [initialLoading, setInitialLoading] = useState(true)
   const [bookingTarget, setBookingTarget] = useState<RoomCategory | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() => {
+    fetch("/api/client/me")
+      .then((r) => setIsAuthenticated(r.ok))
+      .catch(() => setIsAuthenticated(false))
+  }, [])
 
   const handleSearch = async () => {
     if (!checkIn || !checkOut) {
@@ -275,6 +281,7 @@ const RoomsSection = () => {
           checkOut={checkOut}
           nights={nights}
           onClose={() => setBookingTarget(null)}
+          isAuthenticated={isAuthenticated}
         />
       )}
 

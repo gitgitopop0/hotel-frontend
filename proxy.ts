@@ -26,7 +26,7 @@ export async function proxy(req: NextRequest) {
       role = payload.role as string
     } catch {
       const url = new URL("/login", req.url)
-      url.searchParams.set("from", pathname)
+      url.searchParams.set("reason", "expired")
       const res = NextResponse.redirect(url)
       res.cookies.delete("token")
       return res
